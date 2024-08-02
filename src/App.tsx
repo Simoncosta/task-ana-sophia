@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react"
+import { FormEvent, useState, useEffect } from "react"
 import { FaTrashAlt } from "react-icons/fa";
 
 import { ToastContainer, Bounce, toast } from 'react-toastify';
@@ -10,6 +10,14 @@ function App() {
 
   // array
   const [tasks, setTasks] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (tasks.length !== 0) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    } else {
+      setTasks(JSON.parse(localStorage.getItem('tasks')));
+    }
+  }, [tasks]);
 
   const handleSave = (e: FormEvent) => {
     // não faz refresh não página ao submeter o formulário
